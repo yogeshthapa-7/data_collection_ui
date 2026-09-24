@@ -4,6 +4,7 @@ import type {
   CategoryServerSearchResponse,
   CategoryGroupServerSearchRequest,
   CategoryGroupServerSearchResponse,
+  CategoryGroupSelectResponse,
 } from '@/types/category'
 
 const base_url = import.meta.env.VITE_BASE_URL || ''
@@ -24,6 +25,13 @@ export const categoryGroupServerSearch = async (
   const response = await axios.post<CategoryGroupServerSearchResponse>(
     `${base_url}CategoryGroup/ServerSearch`,
     data
+  )
+  return response.data
+}
+
+export const getCategoryGroupSelectList = async (): Promise<CategoryGroupSelectItem[]> => {
+  const response = await axios.get<CategoryGroupSelectItem[]>(
+    `${base_url}CategoryGroup/SelectList`
   )
   return response.data
 }

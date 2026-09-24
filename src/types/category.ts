@@ -68,3 +68,12 @@ export interface CategoryGroupServerSearchResponse {
   recordsFiltered: number
   draw: number
 }
+
+export interface CategoryGroupSelectItem {
+  CategoryGroupID: number
+  GroupName: string
+}
+
+export interface CategoryGroupSelectResponse {
+  data: CategoryGroupSelectItem[]
+}
