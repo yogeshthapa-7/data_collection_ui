@@ -20,6 +20,7 @@ export interface CardProps {
   className?: string;
   children?: React.ReactNode;    // optional extra content
   action?: React.ReactNode;      // top-right action area
+  disableHoverScale?: boolean;   // disable hover lift/scale for this card
 }
 
 const Card: React.FC<CardProps> = ({
@@ -33,7 +34,12 @@ const Card: React.FC<CardProps> = ({
   className = '',
   children,
   action,
+  disableHoverScale = false,
 }) => {
+  const hoverScaleClasses = disableHoverScale
+    ? ''
+    : 'transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_10px_30px_rgb(0,0,0,0.1),0_4px_12px_rgb(0,0,0,0.05)]'
+
   return (
     <AntCard
       hoverable={!!onClick}
@@ -44,6 +50,7 @@ const Card: React.FC<CardProps> = ({
         border-0
         bg-gradient-to-br from-gray-50 via-gray-100 to-gray-200
         shadow-[0_8px_30px_rgb(0,0,0,0.08),0_4px_12px_rgb(0,0,0,0.04)]
+        ${hoverScaleClasses}
         ${className}
       `}
       styles={{

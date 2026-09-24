@@ -149,12 +149,13 @@ const Category = () => {
                 <Card
                   title={category.CategoryName}
                   details={details}
-                className="h-full group"
-                action={
-                  <CustomButton size="small" type="primary" icon={<FileTextOutlined />}>
-                    Open Form
-                  </CustomButton>
-                }
+                  className="h-full group"
+                  disableHoverScale
+                  action={
+                    <CustomButton size="small" type="primary" icon={<FileTextOutlined />}>
+                      Open Form
+                    </CustomButton>
+                  }
                 >
                   <div className="border-b border-slate-200 my-3" />
                   <div className="grid grid-cols-1 gap-2 transition-all duration-200 max-h-0 overflow-hidden group-hover:max-h-40 opacity-0 group-hover:opacity-100 group-hover:delay-75 delay-0">
