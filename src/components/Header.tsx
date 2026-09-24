@@ -1,10 +1,11 @@
 import React from 'react'
-import { Dropdown } from 'antd'
+import { Dropdown, Avatar } from 'antd'
 import type { MenuProps } from 'antd'
 import { useNavigate } from 'react-router-dom'
 import { getClientConfig } from '@/config/env'
 import type { LoginDetail } from '@/config/env'
 import { getUserInfo, logout } from '@/services/auth.service'
+import { UserOutlined } from '@ant-design/icons'
 import nepalLogo from '@/assets/images/nepal_logo.png'
 import croppedLogo from '@/assets/images/cropped-logo.png'
 import newariLogo from '@/assets/images/newari.png'
@@ -48,9 +49,7 @@ const AppHeader: React.FC = () => {
   ]
 
   const logoUrl = resolveImage(clientConfig.logo)
-  const fullName = userInfo?.FullName || ''
   const userName = userInfo?.UserName || 'User'
-  const initial = fullName?.charAt(0) || 'U'
 
   return (
     <header
@@ -78,13 +77,17 @@ const AppHeader: React.FC = () => {
       </div>
 
       <Dropdown menu={{ items: userMenuItems }} placement="bottomRight" arrow>
-        <div className="flex cursor-pointer items-center gap-3 rounded-lg px-2 py-1.5 transition-colors hover:bg-slate-50">
-          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-indigo-600 text-white shadow-sm">
-            <span className="text-sm font-semibold">{initial}</span>
-          </div>
+        <div className="flex cursor-pointer items-center gap-3 rounded-lg px-2 py-1.5 transition-colors hover:bg-indigo-500/20">
+          <Avatar
+            size="large"
+            icon={<UserOutlined />}
+            className="bg-indigo-500/80 text-white"
+          >
+            {userName?.charAt(0)}
+          </Avatar>
 
           <div className="hidden flex-col justify-center sm:flex">
-            <span className="text-sm font-semibold leading-tight text-red-500">
+            <span className="text-sm font-semibold leading-tight text-white">
               {userName}
             </span>
           </div>
