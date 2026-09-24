@@ -19,6 +19,7 @@ export interface CardProps {
   onClick?: () => void;
   className?: string;
   children?: React.ReactNode;    // optional extra content
+  action?: React.ReactNode;      // top-right action area
 }
 
 const Card: React.FC<CardProps> = ({
@@ -31,6 +32,7 @@ const Card: React.FC<CardProps> = ({
   onClick,
   className = '',
   children,
+  action,
 }) => {
   return (
     <AntCard
@@ -80,11 +82,12 @@ const Card: React.FC<CardProps> = ({
           </div>
         </div>
 
-        {orderKey !== undefined && (
+        {orderKey !== undefined && !action && (
           <Tag className="!m-0 !rounded-lg !border-0 !bg-gray-800 !text-white !px-2.5">
             #{orderKey}
           </Tag>
         )}
+        {action}
       </div>
 
       {/* Details */}

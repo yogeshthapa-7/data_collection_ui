@@ -1,10 +1,21 @@
 import React, { useState, useEffect } from 'react'
 import { Input, Row, Col, Spin, message, Typography } from 'antd'
-import { SearchOutlined } from '@ant-design/icons'
+import {
+  SearchOutlined,
+  FileTextOutlined,
+  CopyOutlined,
+  QrcodeOutlined,
+  LinkOutlined,
+  EditOutlined,
+  DeleteOutlined,
+  RocketOutlined,
+  TableOutlined,
+} from '@ant-design/icons'
 import { categoryServerSearch } from '@/services/category.service'
 import type { CategoryServerSearchRequest, CategoryItem } from '@/types/category'
 import Card from '@/components/ui/card'
 import type { CardDetail } from '@/components/ui/card'
+import CustomButton from '@/components/ui/button'
 
 const { Title } = Typography
 const { Search } = Input
@@ -23,8 +34,8 @@ const Category = () => {
           start: 0,
           length: 10,
           search: {
-            value: searchValue,
-            regex: false,
+            value: "",
+            regex: "",
           },
         },
         param: {
@@ -58,26 +69,69 @@ const Category = () => {
         <Row gutter={[16, 16]}>
           {categories.map((category) => {
             const details: CardDetail[] = [
+              { label: 'Category Group', value: category.CategoryGroupName },
+              { label: 'DB Table Name', value: category.DbTableName },
               ...(category.Description
                 ? [{ label: 'Description', value: category.Description }]
                 : []),
-              {
-                label: 'Status',
-                value: category.Status ? 'Active' : 'Inactive',
-              },
               ...(category.CreatedAt
                 ? [{ label: 'Created', value: new Date(category.CreatedAt).toLocaleDateString() }]
                 : []),
             ]
 
             return (
-              <Col xs={24} sm={12} md={12} lg={6} key={category.CategoryID}>
+              <Col xs={24} sm={12} md={12} lg={8} key={category.CategoryID}>
                 <Card
                   title={category.CategoryName}
-                  orderKey={category.CategoryID}
                   details={details}
-                  className="h-full"
-                />
+                className="h-full group"
+                action={
+                  <CustomButton size="small" type="primary" icon={<FileTextOutlined />}>
+                    Open Form
+                  </CustomButton>
+                }
+                >
+                  <div className="border-b border-slate-200 my-3" />
+                  <div className="transition-all duration-200 opacity-0 group-hover:opacity-100">
+                    <Row gutter={[8, 8]}>
+                      <Col span={6}>
+                        <CustomButton size="small" block icon={<LinkOutlined />}>
+                          Copy
+                        </CustomButton>
+                      </Col>
+                      <Col span={6}>
+                        <CustomButton size="small" block icon={<QrcodeOutlined />}>
+                          QR
+                        </CustomButton>
+                      </Col>
+                      <Col span={6}>
+                        <CustomButton size="small" block icon={<CopyOutlined />}>
+                          Clone
+                        </CustomButton>
+                      </Col>
+                      <Col span={6}>
+                        <CustomButton size="small" block type="primary" icon={<RocketOutlined />}>
+                          Deploy
+                        </CustomButton>
+                      </Col>
+                      <Col span={8}>
+                        <CustomButton size="small" block icon={<EditOutlined />}>
+                          Edit
+                        </CustomButton>
+                      </Col>
+                      <Col span={8}>
+                        <CustomButton size="small" block danger icon={<DeleteOutlined />}>
+                          Delete
+                        </CustomButton>
+                      </Col>
+                      <Col span={8}>
+                        <CustomButton size="small" block icon={<TableOutlined />}>
+                          Manage Table
+                        </CustomButton>
+                      </Col>
+                    </Row>
+                  </div>
+                </Card>
               </Col>
             )
           })}
