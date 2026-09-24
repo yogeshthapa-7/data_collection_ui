@@ -99,7 +99,7 @@ const Category = () => {
             />
           </div>
           <div className="w-64">
-            <label className="mb-1 block text-sm font-medium text-slate-700">Category Group</label>
+            <label className="mb-1 block text-sm font-bold text-slate-700">Category Group</label>
             <Select
               placeholder="Select category group"
               value={categoryGroup}
@@ -115,7 +115,7 @@ const Category = () => {
             </Select>
           </div>
           <div className="w-64">
-            <label className="mb-1 block text-sm font-medium text-slate-700">Category Code</label>
+            <label className="mb-1 block text-sm font-bold text-slate-700">Category Code</label>
             <InputCustom
               placeholder="Search by category code"
               value={categoryCode}

@@ -1,165 +1,82 @@
 import React from "react"
-
+ 
 const GovernmentBackground: React.FC = () => {
-  return (
-    <div
-      aria-hidden="true"
-      className="
-        fixed inset-0 -z-10
-        h-screen w-full
-        overflow-hidden
-        pointer-events-none
-        bg-gradient-to-br
-        from-slate-200
-        via-slate-100
-        to-slate-200
-      "
-    >
-      {/* Soft atmospheric overlay */}
-      <div
-        className="
-          absolute inset-0
-          bg-[radial-gradient(circle_at_50%_40%,rgba(255,255,255,0.95)_0%,rgba(248,250,252,0.78)_45%,rgba(241,245,249,0.35)_100%)]
-        "
-      />
-
-      {/* ========== 3D Hexagonal Pattern (softer) ========== */}
-      <div className="absolute inset-0 opacity-[0.42]">
-        <svg
-          className="h-full w-full"
-          xmlns="http://www.w3.org/2000/svg"
-          preserveAspectRatio="xMidYMid slice"
-        >
-          <defs>
-            {/* Base subtle blue-gray gradient for hex faces */}
-            <linearGradient id="hexFace" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#e2e8f0" />
-              <stop offset="40%" stopColor="#cbd5e1" />
-              <stop offset="100%" stopColor="#94a3b8" />
-            </linearGradient>
-
-            {/* Highlight gradient (top-left light) */}
-            <linearGradient id="hexHighlight" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#ffffff" stopOpacity="0.95" />
-              <stop offset="50%" stopColor="#f8fafc" stopOpacity="0.5" />
-              <stop offset="100%" stopColor="#f1f5f9" stopOpacity="0" />
-            </linearGradient>
-
-            {/* Shadow gradient (bottom-right) */}
-            <linearGradient id="hexShadow" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#64748b" stopOpacity="0" />
-              <stop offset="60%" stopColor="#475569" stopOpacity="0.12" />
-              <stop offset="100%" stopColor="#334155" stopOpacity="0.22" />
-            </linearGradient>
-
-            {/* Soft blue accent (very subtle) */}
-            <linearGradient id="hexBlue" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#e0f2fe" stopOpacity="0.18" />
-              <stop offset="100%" stopColor="#bae6fd" stopOpacity="0.08" />
-            </linearGradient>
-
-            {/* Hexagon shape (pointy-top) */}
-            <polygon
-              id="hex"
-              points="50,0 93.3,25 93.3,75 50,100 6.7,75 6.7,25"
-            />
-          </defs>
-
-          {/* Generate a dense hexagonal grid */}
-          {Array.from({ length: 14 }).map((_, row) =>
-            Array.from({ length: 18 }).map((_, col) => {
-              const x = col * 86 + (row % 2 === 1 ? 43 : 0)
-              const y = row * 75
-              const isEven = (row + col) % 2 === 0
-
-              return (
-                <g key={`${row}-${col}`} transform={`translate(${x - 80}, ${y - 60})`}>
-                  {/* Main face */}
-                  <use
-                    href="#hex"
-                    fill="url(#hexFace)"
-                    stroke="#94a3b8"
-                    strokeWidth="0.7"
-                    strokeOpacity="0.18"
-                  />
-
-                  {/* Soft blue tint on some hexes */}
-                  {isEven && (
-                    <use
-                      href="#hex"
-                      fill="url(#hexBlue)"
-                      opacity="0.5"
-                    />
-                  )}
-
-                  {/* Highlight */}
-                  <use
-                    href="#hex"
-                    fill="url(#hexHighlight)"
-                    opacity="0.65"
-                  />
-
-                  {/* Shadow */}
-                  <use
-                    href="#hex"
-                    fill="url(#hexShadow)"
-                    opacity="0.7"
-                  />
-                </g>
-              )
-            })
-          )}
-        </svg>
-      </div>
-
-      {/* Soft depth orbs */}
-      <div
-        className="
-          absolute
-          -left-40
-          -top-40
-          h-[480px]
-          w-[480px]
-          rounded-full
-          bg-blue-100/8
-          blur-[110px]
-        "
-      />
-      <div
-        className="
-          absolute
-          -bottom-48
-          -right-40
-          h-[520px]
-          w-[520px]
-          rounded-full
-          bg-slate-200/10
-          blur-[120px]
-        "
-      />
-
-      {/* Stronger center veil – keeps text highly readable */}
-      <div
-        className="
-          absolute
-          inset-0
-          z-20
-          bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.78)_0%,rgba(255,255,255,0.55)_32%,rgba(255,255,255,0.2)_65%,transparent_100%)]
-        "
-      />
-
-      {/* Extra soft veil on mobile */}
-      <div
-        className="
-          absolute
-          inset-0
-          hidden
-          max-md:block
-          bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.92)_0%,rgba(255,255,255,0.72)_48%,rgba(255,255,255,0.22)_100%)]
-        "
-      />
-    </div>
-  )
+return (
+<div
+aria-hidden="true"
+className="fixed inset-0 -z-10 h-screen w-full overflow-hidden pointer-events-none"
+>
+{/* Main Government Gradient */}
+<div className="absolute inset-0 bg-gradient-to-br from-[#F8FAFC] via-[#EAF3FB] to-[#DCEBFA]" />
+ 
+{/* Subtle SVG Geometric Pattern */}
+<svg
+className="absolute inset-0 h-full w-full"
+xmlns="http://www.w3.org/2000/svg"
+preserveAspectRatio="xMidYMid slice"
+>
+<defs>
+<linearGradient id="govBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+<stop offset="0%" stopColor="#003893" stopOpacity="0.08" />
+<stop offset="100%" stopColor="#0D5CB6" stopOpacity="0.04" />
+</linearGradient>
+ 
+<linearGradient id="govLight" x1="0%" y1="0%" x2="100%" y2="100%">
+<stop offset="0%" stopColor="#1E6BA8" stopOpacity="0.06" />
+<stop offset="100%" stopColor="#FFFFFF" stopOpacity="0.02" />
+</linearGradient>
+</defs>
+ 
+{/* Top Left */}
+<path
+d="M0 0 L500 0 L380 320 L0 220 Z"
+fill="url(#govBlue)"
+/>
+ 
+<path
+d="M0 250 L360 180 L280 520 L0 480 Z"
+fill="url(#govLight)"
+/>
+ 
+{/* Bottom Left */}
+<path
+d="M0 1080 L0 820 L320 920 L180 1080 Z"
+fill="url(#govBlue)"
+/>
+ 
+{/* Top Right */}
+<path
+d="M1920 0 L1420 0 L1540 320 L1920 240 Z"
+fill="url(#govBlue)"
+/>
+ 
+<path
+d="M1920 300 L1600 220 L1680 560 L1920 500 Z"
+fill="url(#govLight)"
+/>
+ 
+{/* Bottom Right */}
+<path
+d="M1920 1080 L1920 780 L1600 900 L1740 1080 Z"
+fill="url(#govBlue)"
+/>
+</svg>
+ 
+{/* Nepal Flag Inspired Accent */}
+<div className="absolute top-0 left-0 h-1.5 w-full bg-gradient-to-r from-[#003893] via-[#0D5CB6] to-[#DC143C]" />
+ 
+{/* Soft Blue Glow */}
+<div className="absolute -top-24 -left-24 h-96 w-96 rounded-full bg-[#0D5CB6]/10 blur-[120px]" />
+ 
+<div className="absolute -bottom-24 -right-24 h-96 w-96 rounded-full bg-[#003893]/10 blur-[120px]" />
+ 
+{/* Very Subtle Red Accent */}
+<div className="absolute bottom-0 right-0 h-72 w-72 rounded-full bg-[#DC143C]/5 blur-[140px]" />
+ 
+{/* Center Reading Area */}
+<div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0)_0%,rgba(255,255,255,0)_55%,rgba(248,250,252,0.35)_100%)]" />
+</div>
+)
 }
-
+ 
 export default GovernmentBackground
