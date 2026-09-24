@@ -92,7 +92,7 @@ const Category = () => {
                 }
                 >
                   <div className="border-b border-slate-200 my-3" />
-                  <div className="transition-all duration-200 opacity-0 group-hover:opacity-100">
+                  <div className="grid grid-cols-1 gap-2 transition-all duration-200 max-h-0 overflow-hidden group-hover:max-h-40 opacity-0 group-hover:opacity-100 group-hover:delay-75 delay-0">
                     <Row gutter={[8, 8]}>
                       <Col span={6}>
                         <CustomButton size="small" block icon={<LinkOutlined />}>

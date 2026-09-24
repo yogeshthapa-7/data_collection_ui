@@ -45,8 +45,8 @@ const Card: React.FC<CardProps> = ({
         bg-gradient-to-br from-gray-50 via-gray-100 to-gray-200
         shadow-[0_8px_30px_rgb(0,0,0,0.08),0_4px_12px_rgb(0,0,0,0.04)]
         transition-all duration-300 ease-out
-        hover:-translate-y-2
-        hover:shadow-[0_20px_40px_rgb(0,0,0,0.12),0_8px_20px_rgb(0,0,0,0.06)]
+        hover:-translate-y-1
+        hover:shadow-[0_10px_30px_rgb(0,0,0,0.1),0_4px_12px_rgb(0,0,0,0.05)]
         ${className}
       `}
       styles={{

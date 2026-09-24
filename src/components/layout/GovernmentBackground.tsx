@@ -10,9 +10,9 @@ const GovernmentBackground: React.FC = () => {
         overflow-hidden
         pointer-events-none
         bg-gradient-to-br
-        from-slate-50
-        via-white
-        to-slate-100
+        from-slate-200
+        via-slate-100
+        to-slate-200
       "
     >
       {/* Soft atmospheric overlay */}
@@ -33,9 +33,9 @@ const GovernmentBackground: React.FC = () => {
           <defs>
             {/* Base subtle blue-gray gradient for hex faces */}
             <linearGradient id="hexFace" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#f8fafc" />
-              <stop offset="40%" stopColor="#f1f5f9" />
-              <stop offset="100%" stopColor="#e2e8f0" />
+              <stop offset="0%" stopColor="#e2e8f0" />
+              <stop offset="40%" stopColor="#cbd5e1" />
+              <stop offset="100%" stopColor="#94a3b8" />
             </linearGradient>
 
             {/* Highlight gradient (top-left light) */}
@@ -47,9 +47,9 @@ const GovernmentBackground: React.FC = () => {
 
             {/* Shadow gradient (bottom-right) */}
             <linearGradient id="hexShadow" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#94a3b8" stopOpacity="0" />
-              <stop offset="60%" stopColor="#64748b" stopOpacity="0.08" />
-              <stop offset="100%" stopColor="#475569" stopOpacity="0.16" />
+              <stop offset="0%" stopColor="#64748b" stopOpacity="0" />
+              <stop offset="60%" stopColor="#475569" stopOpacity="0.12" />
+              <stop offset="100%" stopColor="#334155" stopOpacity="0.22" />
             </linearGradient>
 
             {/* Soft blue accent (very subtle) */}
@@ -144,7 +144,7 @@ const GovernmentBackground: React.FC = () => {
           absolute
           inset-0
           z-20
-          bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.88)_0%,rgba(255,255,255,0.65)_32%,rgba(255,255,255,0.28)_65%,transparent_100%)]
+          bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.78)_0%,rgba(255,255,255,0.55)_32%,rgba(255,255,255,0.2)_65%,transparent_100%)]
         "
       />
 
