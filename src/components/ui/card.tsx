@@ -47,8 +47,8 @@ const Card: React.FC<CardProps> = ({
       className={`
         relative overflow-hidden
         rounded-2xl
-        border-0
-        bg-gradient-to-br from-gray-50 via-gray-100 to-gray-200
+        border border-slate-200
+        bg-gradient-to-br from-slate-50 via-slate-100 to-slate-200
         shadow-[0_8px_30px_rgb(0,0,0,0.08),0_4px_12px_rgb(0,0,0,0.04)]
         ${hoverScaleClasses}
         ${className}
