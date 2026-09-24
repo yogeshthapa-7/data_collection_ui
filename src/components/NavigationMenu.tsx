@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Menu, ConfigProvider, theme } from 'antd';
 import type { MenuProps } from 'antd';
+import { useNavigate, useLocation } from 'react-router-dom';
 import {
   AppstoreOutlined,
   ClusterOutlined,
@@ -16,23 +17,24 @@ import {
 type MenuItem = Required<MenuProps>['items'][number];
 
 const items: MenuItem[] = [
-  { key: 'category', icon: <AppstoreOutlined />, label: 'Category' },
-  { key: 'category-group', icon: <ClusterOutlined />, label: 'Category-Group' },
-  { key: 'organization', icon: <BankOutlined />, label: 'Organization-Group' },
-  { key: 'form-data', icon: <FormOutlined />, label: 'Form Data' },
-  { key: 'map-view', icon: <EnvironmentOutlined />, label: 'Map View' },
-  { key: 'users', icon: <TeamOutlined />, label: 'Users' },
-  { key: 'employee', icon: <UserOutlined />, label: 'Employee' },
-  { key: 'departments', icon: <ApartmentOutlined />, label: 'Departments' },
-  { key: 'mapbox-resource', icon: <GlobalOutlined />, label: 'Mapbox Resource' },
+  { key: '/category', icon: <AppstoreOutlined />, label: 'Category' },
+  { key: '/category-group', icon: <ClusterOutlined />, label: 'Category-Group' },
+  { key: '/organization', icon: <BankOutlined />, label: 'Organization-Group' },
+  { key: '/form-data', icon: <FormOutlined />, label: 'Form Data' },
+  { key: '/map-view', icon: <EnvironmentOutlined />, label: 'Map View' },
+  { key: '/users', icon: <TeamOutlined />, label: 'Users' },
+  { key: '/employee', icon: <UserOutlined />, label: 'Employee' },
+  { key: '/departments', icon: <ApartmentOutlined />, label: 'Departments' },
+  { key: '/mapbox-resource', icon: <GlobalOutlined />, label: 'Mapbox Resource' },
 ];
 
 const NavigationMenu: React.FC = () => {
-  const [selectedKeys, setSelectedKeys] = useState<string[]>(['category']);
+  const navigate = useNavigate()
+  const location = useLocation()
 
   const onClick: MenuProps['onClick'] = (e) => {
-    setSelectedKeys([e.key]);
-  };
+    navigate(e.key)
+  }
 
   return (
     <ConfigProvider
@@ -48,7 +50,7 @@ const NavigationMenu: React.FC = () => {
   <div className="mx-auto max-w-7xl px-4">
     <Menu
       mode="horizontal"
-      selectedKeys={selectedKeys}
+      selectedKeys={[location.pathname]}
       onClick={onClick}
       items={items}
       className="

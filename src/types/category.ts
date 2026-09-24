@@ -17,6 +17,15 @@ export interface CategoryServerSearchRequest {
   param: CategoryServerSearchParam
 }
 
+export interface CategoryGroupServerSearchParam {
+  CategoryGroupID: number
+}
+
+export interface CategoryGroupServerSearchRequest {
+  model: CategoryServerSearchModel
+  param: CategoryGroupServerSearchParam
+}
+
 export interface CategoryItem {
   SN?: number
   CategoryID: number
@@ -37,8 +46,24 @@ export interface CategoryItem {
   CreatedAt?: string
 }
 
+export interface CategoryGroupItem {
+  CategoryGroupID: number
+  GroupName: string
+  GroupCode?: string
+  Icon?: string
+  Description?: string
+  OrderKey?: number
+}
+
 export interface CategoryServerSearchResponse {
   data: CategoryItem[]
+  recordsTotal: number
+  recordsFiltered: number
+  draw: number
+}
+
+export interface CategoryGroupServerSearchResponse {
+  data: CategoryGroupItem[]
   recordsTotal: number
   recordsFiltered: number
   draw: number

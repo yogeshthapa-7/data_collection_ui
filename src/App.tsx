@@ -6,6 +6,7 @@ import ModulePage from '@/auth/ModulePage'
 import RequireAuth from '@/auth/RequireAuth'
 import PageLayout from '@/components/layout/PageLayout'
 import CategoryPage from '@/pages/category/Category'
+import CategoryGroupPage from '@/pages/categoty-group/category_group'
 
 function RootApp() {
   return (
@@ -55,6 +56,7 @@ function RootApp() {
           </Route>
           <Route element={<PageLayout />}>
             <Route path="/category" element={<CategoryPage />} />
+            <Route path="/category-group" element={<CategoryGroupPage />} />
           </Route>
         </Routes>
       </BrowserRouter>
