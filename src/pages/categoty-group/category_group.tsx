@@ -8,6 +8,7 @@ import type {
 } from '@/types/category'
 import Card from '@/components/ui/card'
 import CustomButton from '@/components/ui/button'
+import InputCustom from '@/components/ui/input'
 
 const { Title } = Typography
 const { Search } = Input
@@ -26,14 +27,16 @@ const iconMap: Record<string, React.ReactNode> = {
 const CategoryGroup = () => {
   const [groups, setGroups] = useState<CategoryGroupItem[]>([])
   const [loading, setLoading] = useState(false)
-  const [searchText, setSearchText] = useState('')
+  const [groupName, setGroupName] = useState('')
+  const [groupCode, setGroupCode] = useState('')
+  const [icon, setIcon] = useState('')
 
   const getIcon = (icon?: string) => {
     if (!icon) return <HomeOutlined />
     return iconMap[icon] || <HomeOutlined />
   }
 
-  const fetchGroups = async (searchValue: string = '') => {
+  const fetchGroups = async () => {
     setLoading(true)
     try {
       const payload: CategoryGroupServerSearchRequest = {
@@ -65,15 +68,48 @@ const CategoryGroup = () => {
     fetchGroups()
   }, [])
 
-  const handleSearch = (value: string) => {
-    setSearchText(value)
-    fetchGroups(value)
+  const handleFilterChange = () => {
+    fetchGroups()
   }
 
   return (
     <div className="p-6">
 
       <Spin spinning={loading}>
+        <div className="mb-6 flex flex-wrap items-end gap-4">
+          <div className="w-64">
+            <label className="mb-1 block text-sm font-bold text-slate-700">Group Name</label>
+            <InputCustom
+              placeholder="Search by group name"
+              value={groupName}
+              onChange={(e) => { setGroupName(e.target.value); handleFilterChange() }}
+            />
+          </div>
+          <div className="w-64">
+            <label className="mb-1 block text-sm font-bold text-slate-700">Group Code</label>
+            <InputCustom
+              placeholder="Search by group code"
+              value={groupCode}
+              onChange={(e) => { setGroupCode(e.target.value); handleFilterChange() }}
+            />
+          </div>
+          <div className="w-64">
+            <label className="mb-1 block text-sm font-bold text-slate-700">Icon</label>
+            <InputCustom
+              placeholder="Search by icon"
+              value={icon}
+              onChange={(e) => { setIcon(e.target.value); handleFilterChange() }}
+            />
+          </div>
+          <div className="flex gap-2">
+            <CustomButton type="primary" icon={<SearchOutlined />} onClick={handleFilterChange}>
+              Search
+            </CustomButton>
+            <CustomButton onClick={() => { setGroupName(''); setGroupCode(''); setIcon(''); setTimeout(handleFilterChange, 0) }}>
+              Clear
+            </CustomButton>
+          </div>
+        </div>
         <Row gutter={[16, 16]}>
           {groups.map((group) => {
             return (
