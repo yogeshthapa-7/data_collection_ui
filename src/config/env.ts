@@ -35,7 +35,7 @@ export const environment = {
       mainlogo: '../assets/images/nepal_logo.png',
       mainTitle: 'काठमाडौं महानगरपालिका कार्यालय',
       mainSubtitle: 'Data Collection & Manipulation Portal',
-      logo: '../assets/images/kmc_logo.jpg',
+      logo: '../assets/images/kmc_logo_transparent.png',
       mainHeading: 'काठमाडौं महानगरपालिका कार्यालय',
       logo2: '../assets/image/logo/kmc-logo.png',
       logo3: '../assets/images/nepal.gif',
@@ -193,16 +193,8 @@ export const environment = {
   client_code: 'kmc-dc',
 }
 
-export const getClientConfig = async (): Promise<LoginDetail> => {
+export const getClientConfig = (): LoginDetail => {
   const clientCode = import.meta.env.VITE_CLIENT_CODE || environment.client_code
-  const baseUrl = import.meta.env.VITE_BASE_URL || environment.base_url
-
-  try {
-    const response = await axios.get<LoginDetail>(`${baseUrl}GetClientConfig?clientcode=${clientCode}`)
-    return response.data
-  } catch (error) {
-    console.error('Failed to fetch client config from API, using fallback', error)
-    const client = environment.loginDetails.find((item) => item.clientcode === clientCode)
-    return client || environment.loginDetails[0]
-  }
+  const client = environment.loginDetails.find((item) => item.clientcode === clientCode)
+  return client || environment.loginDetails[0]
 }
