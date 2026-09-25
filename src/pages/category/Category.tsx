@@ -20,89 +20,6 @@ import InputCustom from '@/components/ui/input'
 
 const { Title } = Typography
 const { Search } = Input
-const { Option } = Select
-
-const CategoryCard = ({ category }: { category: CategoryItem }) => {
-  const [hovered, setHovered] = useState(false)
-
-  const details: CardDetail[] = [
-    { label: 'Category Group', value: category.CategoryGroupName },
-    { label: 'DB Table Name', value: category.DbTableName },
-    ...(category.Description
-      ? [{ label: 'Description', value: category.Description }]
-      : []),
-    ...(category.CreatedAt
-      ? [{ label: 'Created', value: new Date(category.CreatedAt).toLocaleDateString() }]
-      : []),
-  ]
-
-  return (
-    <div
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-    >
-      <Card
-        title={category.CategoryName}
-        details={details}
-        className="h-full"
-        disableHoverScale
-        action={
-          <CustomButton size="small" type="primary" icon={<FileTextOutlined />}>
-            Open Form
-          </CustomButton>
-        }
-      >
-        <div className="border-b border-slate-200 my-3" />
-        <div
-          className="grid grid-cols-1 gap-2 transition-all duration-200"
-          style={{
-            maxHeight: hovered ? '160px' : '0px',
-            overflow: 'hidden',
-            opacity: hovered ? 1 : 0,
-          }}
-        >
-          <Row gutter={[8, 8]}>
-            <Col span={6}>
-              <CustomButton size="small" block icon={<LinkOutlined />}>
-                Copy
-              </CustomButton>
-            </Col>
-            <Col span={6}>
-              <CustomButton size="small" block icon={<QrcodeOutlined />}>
-                QR
-              </CustomButton>
-            </Col>
-            <Col span={6}>
-              <CustomButton size="small" block icon={<CopyOutlined />}>
-                Clone
-              </CustomButton>
-            </Col>
-            <Col span={6}>
-              <CustomButton size="small" block type="primary" icon={<RocketOutlined />}>
-                Deploy
-              </CustomButton>
-            </Col>
-            <Col span={8}>
-              <CustomButton size="small" block icon={<EditOutlined />}>
-                Edit
-              </CustomButton>
-            </Col>
-            <Col span={8}>
-              <CustomButton size="small" block danger icon={<DeleteOutlined />}>
-                Delete
-              </CustomButton>
-            </Col>
-            <Col span={8}>
-              <CustomButton size="small" block icon={<TableOutlined />}>
-                Manage Table
-              </CustomButton>
-            </Col>
-          </Row>
-        </div>
-      </Card>
-    </div>
-  )
-}
 
 const Category = () => {
   const [categories, setCategories] = useState<CategoryItem[]>([])
@@ -148,8 +65,9 @@ const Category = () => {
   useEffect(() => {
     const fetchGroups = async () => {
       try {
-        const data = await getCategoryGroupSelectList()
-        setGroupOptions(data || [])
+        const response = await getCategoryGroupSelectList()
+        console.log('Category group select list:', response)
+        setGroupOptions(response.data || [])
       } catch (error) {
         console.error('Failed to fetch category groups', error)
       }
@@ -172,7 +90,7 @@ const Category = () => {
       <Spin spinning={loading}>
         <div className="mb-6 flex flex-wrap items-end gap-4">
           <div className="w-64">
-            <label className="mb-1 block text-sm font-bold text-slate-700">Category Name</label>
+            <label className="mb-1 block text-sm font-bold text-black">Category Name</label>
             <InputCustom
               placeholder="Search by category name"
               value={categoryName}
@@ -180,7 +98,7 @@ const Category = () => {
             />
           </div>
           <div className="w-64">
-            <label className="mb-1 block text-sm font-bold text-slate-700">Category Group</label>
+            <label className="mb-1 block text-sm font-bold text-black">Category Group</label>
             <Select
               placeholder="Select category group"
               value={categoryGroup}
@@ -196,7 +114,7 @@ const Category = () => {
             </Select>
           </div>
           <div className="w-64">
-            <label className="mb-1 block text-sm font-bold text-slate-700">Category Code</label>
+            <label className="mb-1 block text-sm font-bold text-black">Category Code</label>
             <InputCustom
               placeholder="Search by category code"
               value={categoryCode}
@@ -213,11 +131,74 @@ const Category = () => {
           </div>
         </div>
         <Row gutter={[16, 16]}>
-          {categories.map((category) => (
-            <Col xs={24} sm={12} md={12} lg={8} key={category.CategoryID}>
-              <CategoryCard category={category} />
-            </Col>
-          ))}
+          {categories.map((category) => {
+            const details: CardDetail[] = [
+              { label: 'Category Group', value: category.CategoryGroupName },
+              { label: 'DB Table Name', value: category.DbTableName },
+              ...(category.Description
+                ? [{ label: 'Description', value: category.Description }]
+                : []),
+              ...(category.CreatedAt
+                ? [{ label: 'Created', value: new Date(category.CreatedAt).toLocaleDateString() }]
+                : []),
+            ]
+
+            return (
+              <Col xs={24} sm={12} md={12} lg={8} key={category.CategoryID}>
+                <Card
+                  title={category.CategoryName}
+                  details={details}
+                className="h-full group"
+                action={
+                  <CustomButton size="small" type="primary" icon={<FileTextOutlined />}>
+                    Open Form
+                  </CustomButton>
+                }
+                >
+                  <div className="border-b border-slate-200 my-3" />
+                  <div className="grid grid-cols-1 gap-2 transition-all duration-200 max-h-0 overflow-hidden group-hover:max-h-40 opacity-0 group-hover:opacity-100 group-hover:delay-75 delay-0">
+                    <Row gutter={[8, 8]}>
+                      <Col span={6}>
+                        <CustomButton size="small" block icon={<LinkOutlined />}>
+                          Copy
+                        </CustomButton>
+                      </Col>
+                      <Col span={6}>
+                        <CustomButton size="small" block icon={<QrcodeOutlined />}>
+                          QR
+                        </CustomButton>
+                      </Col>
+                      <Col span={6}>
+                        <CustomButton size="small" block icon={<CopyOutlined />}>
+                          Clone
+                        </CustomButton>
+                      </Col>
+                      <Col span={6}>
+                        <CustomButton size="small" block type="primary" icon={<RocketOutlined />}>
+                          Deploy
+                        </CustomButton>
+                      </Col>
+                      <Col span={8}>
+                        <CustomButton size="small" block icon={<EditOutlined />}>
+                          Edit
+                        </CustomButton>
+                      </Col>
+                      <Col span={8}>
+                        <CustomButton size="small" block danger icon={<DeleteOutlined />}>
+                          Delete
+                        </CustomButton>
+                      </Col>
+                      <Col span={8}>
+                        <CustomButton size="small" block icon={<TableOutlined />}>
+                          Manage Table
+                        </CustomButton>
+                      </Col>
+                    </Row>
+                  </div>
+                </Card>
+              </Col>
+            )
+          })}
         </Row>
 
         {!loading && categories.length === 0 && (
