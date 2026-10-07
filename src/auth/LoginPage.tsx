@@ -1,41 +1,14 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { Form, Input, Button, Typography, message } from 'antd'
 import { UserOutlined, LockOutlined, EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons'
 import { useNavigate } from 'react-router-dom'
-import { userLogin, getLoggedInUserInfo, getLoggedInMenusInfo } from '@/services/login.service'
-import { setUserSession, setUserInfo, setMenus } from '@/services/auth.service'
+import { useAppDispatch } from '@/app/hooks'
+import { useLoginMutation, authApi } from '@/auth/authApi'
+import { setCredentials, setUserInfo, setMenus } from '@/auth/authSlice'
 import { getClientConfig } from '@/config/env'
 import type { LoginDetail } from '@/config/env'
-import loginImg from '@/assets/images/login.jpg'
-import nepalLogo from '@/assets/images/nepal_logo.png'
-import kmcLogo from '@/assets/images/kmc_logo.jpg'
-import croppedLogo from '@/assets/images/cropped-logo.png'
-import newariLogo from '@/assets/images/newari.png'
-import thakreLogo from '@/assets/images/thakre_logo.png'
-import collectionimg from '@/assets/images/collection.png'
-import nepalFlag from '@/assets/images/nepal.gif'
 
 const { Title, Text } = Typography
-
-const imageMap: Record<string, string> = {
-  '../assets/images/nepal_logo.png': nepalLogo,
-  '../assets/images/kmc_logo.jpg': kmcLogo,
-  '../assets/images/cropped-logo.png': croppedLogo,
-  '../assets/images/newari.png': newariLogo,
-  '../assets/images/thakre_logo.png': thakreLogo,
-  '../assets/images/login.jpg': loginImg,
-  '../assets/images/collection.png': collectionimg,
-  '../assets/images/nepal.gif': nepalFlag,
-  '../assets/image/logo/kmc-logo.png': croppedLogo,
-  '../assets/images/logo/newari.png': newariLogo,
-  '../assets/images/logo/badimalika_new_logo.png': croppedLogo,
-  '../assets/images/Flag_of_Nepal.gif': nepalFlag,
-}
-
-const resolveImage = (path?: string) => {
-  if (!path) return ''
-  return imageMap[path] || path
-}
 
 interface LoginFormValues {
   username: string
@@ -74,6 +47,8 @@ const features = [
 
 const LoginPage = () => {
   const navigate = useNavigate()
+  const dispatch = useAppDispatch()
+  const [login] = useLoginMutation()
   const [loading, setLoading] = useState(false)
   const [clientConfig, setClientConfig] = useState<LoginDetail | null>(null)
   const [configLoading, setConfigLoading] = useState(true)
@@ -102,32 +77,32 @@ const LoginPage = () => {
         clientcode: import.meta.env.VITE_CLIENT_CODE || 'kmc-dc',
       }
 
-      const response = await userLogin(payload)
-      const token = response.token || response.access_token || ''
-      const accessToken = response.access_token || response.token || ''
-      const refreshToken = response.refresh_token || ''
+      const response = await login(payload).unwrap()
+      const token = response.token || ''
       const userGroupCode = response.user_group_code || ''
-      const clientcode = response.clientcode || payload.clientcode
+      const clientcode = payload.clientcode
 
-      setUserSession({
+      dispatch(setCredentials({
         token,
-        access_token: accessToken,
-        refresh_token: refreshToken,
-        user_group_code: userGroupCode,
-        clientcode,
-      })
+        accessToken: token,
+        refreshToken: '',
+        userGroupCode,
+        clientCode: clientcode,
+        userInfo: null,
+        menus: null,
+      }))
 
       const [userInfoRes, menusRes] = await Promise.all([
-        getLoggedInUserInfo(),
-        getLoggedInMenusInfo(),
+        dispatch(authApi.endpoints.getLoggedInUserInfo.initiate()).unwrap(),
+        dispatch(authApi.endpoints.getLoggedInMenusInfo.initiate()).unwrap(),
       ])
 
       if (userInfoRes.Success && userInfoRes.Data) {
-        setUserInfo(userInfoRes.Data)
+        dispatch(setUserInfo(userInfoRes.Data))
       }
 
       if (menusRes.Success && menusRes.Data) {
-        setMenus(menusRes.Data)
+        dispatch(setMenus(menusRes.Data))
       }
 
       message.success('Login successful!')
@@ -166,7 +141,7 @@ const LoginPage = () => {
     <div className="relative flex min-h-screen w-full items-center justify-between overflow-hidden px-8 py-12 lg:px-24">
       {/* FULL SCREEN BACKGROUND */}
       <img
-        src={collectionimg}
+        src="/assets/images/collection.png"
         alt="Scenic landscape"
         className="absolute inset-0 z-0 h-full w-full object-cover"
       />
@@ -240,7 +215,7 @@ const LoginPage = () => {
               {/* Header Section */}
               <div className="mb-8 flex flex-col items-center text-center">
                 <img
-                  src={resolveImage(clientConfig.mainlogo || '../assets/images/nepal_logo.png')}
+                   src={clientConfig.mainlogo || '/assets/images/nepal_logo.png'}
                   alt="Nepal Emblem"
                   className="mb-2 h-16 w-auto object-contain"
                 />
@@ -250,12 +225,12 @@ const LoginPage = () => {
                 
                 <div className="mb-4 flex items-center justify-center gap-4">
                   <img
-                    src={resolveImage(clientConfig.logo)}
+                    src={clientConfig.logo}
                     alt="Main Logo"
                     className="h-20 w-20 w-auto rounded-full border border-slate-100 object-contain p-1 shadow-sm"
                   />
                   <img
-                    src={resolveImage(clientConfig.logo3)}
+                    src={clientConfig.logo3}
                     alt="Nepal Flag"
                     className="h-18 w-18 w-auto object-contain"
                   />

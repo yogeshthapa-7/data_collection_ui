@@ -1,12 +1,9 @@
 import { Navigate } from 'react-router-dom'
-import { isUserLoggedIn } from '@/services/auth.service'
-
-interface RequireAuthProps {
-  children: React.ReactNode
-}
+import { useAppSelector } from '@/app/hooks'
 
 const RequireAuth = ({ children }: RequireAuthProps) => {
-  if (!isUserLoggedIn()) {
+  const accessToken = useAppSelector((state) => state.auth.accessToken)
+  if (!accessToken) {
     return <Navigate to="/auth/login" replace />
   }
 

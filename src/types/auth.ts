@@ -6,10 +6,14 @@ export interface LoginRequest {
 
 export interface LoginResponse {
   token: string
-  access_token: string
-  refresh_token: string
+  expiration: string
   user_group_code: string
-  clientcode: string
+  department_code: string
+  fullname: string
+  email: string
+  otp_need: boolean
+  otp_code: string
+  otp_valid_sec: number
 }
 
 export interface EmployeeInfo {

@@ -1,5 +1,3 @@
-import axios from 'axios'
-
 export interface LoginDetail {
   clientcode: string
   app_type: string
@@ -32,14 +30,14 @@ export const environment = {
     {
       clientcode: 'kmc-dc',
       app_type: 'data_collection',
-      mainlogo: '../assets/images/nepal_logo.png',
+      mainlogo: '/assets/images/nepal_logo.png',
       mainTitle: 'काठमाडौं महानगरपालिका कार्यालय',
       mainSubtitle: 'Data Collection & Manipulation Portal',
-      logo: '../assets/images/kmc_logo_transparent.png',
+      logo: '/assets/images/kmc_logo_transparent.png',
       mainHeading: 'काठमाडौं महानगरपालिका कार्यालय',
-      logo2: '../assets/image/logo/kmc-logo.png',
-      logo3: '../assets/images/nepal.gif',
-      logo4: '../assets/images/logo/newari.png',
+      logo2: '/assets/image/logo/kmc-logo.png',
+      logo3: '/assets/images/nepal.gif',
+      logo4: '/assets/images/logo/newari.png',
       Heading: 'Data Collection & Manipulation Portal ',
       Heading2: 'Dynamic Data Form',
       Heading3: '(Question Set)',

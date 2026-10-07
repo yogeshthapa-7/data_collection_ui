@@ -1,11 +1,13 @@
 import axios from 'axios'
-import { getAccessToken } from '@/services/auth.service'
+import type { RootState } from '@/app/store'
+import { getAccessToken } from '@/app/hooks'
+import { logout } from '@/auth/authSlice'
 
-export const setupAxiosInterceptor = () => {
+export const setupAxiosInterceptor = (store: { getState: () => RootState; dispatch: (action: any) => void }) => {
   axios.interceptors.request.use(
     (config) => {
-      const accessToken = getAccessToken()
-
+      const state = store.getState()
+      const accessToken = getAccessToken(state)
       if (accessToken && accessToken !== 'undefined' && accessToken !== 'null') {
         config.headers.Authorization = `Bearer ${accessToken}`
       } else {
@@ -14,9 +16,21 @@ export const setupAxiosInterceptor = () => {
           config.headers.clientcode = clientCode
         }
       }
-
       return config
     },
     (error) => Promise.reject(error)
   )
+
+  axios.interceptors.response.use(
+    (response) => response,
+    async (error) => {
+      if (error.response?.status === 401) {
+        store.dispatch(logout())
+        window.location.href = '/auth/login'
+      }
+      return Promise.reject(error)
+    }
+  )
 }
+
+
