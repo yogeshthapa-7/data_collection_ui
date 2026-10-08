@@ -2,11 +2,11 @@ import { useState, useEffect } from 'react'
 import type { ReactNode } from 'react'
 import { Row, Col, Spin, message } from 'antd'
 import { SearchOutlined, HomeOutlined, CarryOutOutlined, HeartOutlined, ToolOutlined, BookOutlined, PhoneOutlined, ApartmentOutlined, ShoppingOutlined } from '@ant-design/icons'
-import { fetchCategoryGroups } from '@/features/pages/category/services/category.service'
+import { fetchCategoryGroups } from '@/features/pages/categoty-group/services/category-group.service'
 import type {
   CategoryGroupServerSearchRequest,
   CategoryGroupItem,
-} from '@/features/pages/category/types/category'
+} from '@/features/pages/categoty-group/types/category-group'
 import Card from '@/shared/components/ui/card'
 import CustomButton from '@/shared/components/ui/button'
 import InputCustom from '@/shared/components/ui/input'
