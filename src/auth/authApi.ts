@@ -7,14 +7,14 @@ export const authApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: import.meta.env.VITE_BASE_URL,
     prepareHeaders: (headers, { getState }) => {
-      const token = (getState() as RootState).auth.accessToken
-      if (token) {
+      const state = getState() as RootState
+      const token = state.auth?.token
+      const clientCode = state.auth?.clientCode || import.meta.env.VITE_CLIENT_CODE
+      if (token && token !== 'undefined' && token !== 'null') {
         headers.set('Authorization', `Bearer ${token}`)
-      } else {
-        const clientCode = import.meta.env.VITE_CLIENT_CODE || ''
-        if (clientCode) {
-          headers.set('clientcode', clientCode)
-        }
+      }
+      if (clientCode) {
+        headers.set('clientcode', clientCode)
       }
       return headers
     },

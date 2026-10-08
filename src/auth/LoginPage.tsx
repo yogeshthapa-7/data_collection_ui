@@ -78,14 +78,12 @@ const LoginPage = () => {
       }
 
       const response = await login(payload).unwrap()
-      const token = response.token || ''
-      const userGroupCode = response.user_group_code || ''
+      const token = response.token || null
+      const userGroupCode = response.user_group_code || null
       const clientcode = payload.clientcode
 
       dispatch(setCredentials({
         token,
-        accessToken: token,
-        refreshToken: '',
         userGroupCode,
         clientCode: clientcode,
         userInfo: null,

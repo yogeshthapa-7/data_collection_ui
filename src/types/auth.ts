@@ -115,8 +115,6 @@ export interface LoggedInMenusResponse {
 
 export interface UserSession {
   token: string
-  accessToken: string
-  refreshToken: string
   userGroupCode: string
   clientCode: string
   userInfo: LoggedInUserData | null

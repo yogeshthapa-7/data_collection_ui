@@ -1,9 +1,14 @@
 import { Navigate } from 'react-router-dom'
+import type { ReactNode } from 'react'
 import { useAppSelector } from '@/app/hooks'
 
+interface RequireAuthProps {
+  children: ReactNode
+}
+
 const RequireAuth = ({ children }: RequireAuthProps) => {
-  const accessToken = useAppSelector((state) => state.auth.accessToken)
-  if (!accessToken) {
+  const token = useAppSelector((state) => state.auth.token)
+  if (!token) {
     return <Navigate to="/auth/login" replace />
   }
 
