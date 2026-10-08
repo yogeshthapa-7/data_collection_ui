@@ -11,7 +11,7 @@ export const setupAxiosInterceptor = (store: { getState: () => RootState; dispat
       if (token && token !== 'undefined' && token !== 'null') {
         config.headers.Authorization = `Bearer ${token}`
       }
-      const clientCode = state.auth?.clientCode || import.meta.env.VITE_CLIENT_CODE || 'kmc-dc'
+      const clientCode = state.auth?.clientCode || import.meta.env.VITE_CLIENT_CODE
       if (clientCode) {
         config.headers.clientcode = clientCode
       }
